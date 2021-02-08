@@ -1,0 +1,15 @@
+{% extends "../base.html" %}
+{% block content %}
+<div class='container align-right'>
+    <h3 class="text-center">Request a Schedule Update:</h3>
+    <br>
+    <form method="POST" class="content-right">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <input type="submit" value="Save">
+    </form>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}

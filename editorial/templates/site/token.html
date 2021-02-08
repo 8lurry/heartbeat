@@ -1,0 +1,18 @@
+{% extends "./base.html" %}
+{% block content %}
+  <h1>Token List</h1>
+  {% if token_list %}
+  <ul>
+    {% for token in token_list %}
+    <li>
+        {{ token }}: {{ token.patient_name }}
+        <a href="../../../token/view/{{ token.get_absolute_url }}doc/up/">
+            <button>Upload Document</button>
+        </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no token for this schedule.</p>
+  {% endif %} 
+{% endblock %}

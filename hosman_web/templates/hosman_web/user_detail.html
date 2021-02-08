@@ -1,0 +1,65 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block main %}
+<div class="container-fluid text-center">
+  <br>
+  <div class="profile-picture">
+    <img src="/media/{{ picture }}" alt="IMG" style="height: 200px; width: 200px;">
+    <button>UPDATE</button>
+  </div>
+  <h4>{{ patient.first_name }} {{ patient.last_name }}</h4>
+  <hr>
+  <div class="">
+    <span class="btn-main">
+      <button class="btn-main-left" type="button" name="about" onclick="showAbout(this)">Profile</button>
+      <button class="btn-main-right"><a href="#"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a></button>
+    </span>
+    <span class="btn-main">
+      <button type="button" name="timeline" onclick="showTimeline(this)">History</button>
+    </span>
+  </div>
+  <hr>
+  <div class="container about">
+
+    <div class="about" id="user-about" style="display: block;">
+      <table>
+        <tr>
+          <td>Name</td>
+          <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+        </tr>
+        <tr>
+          <td>Username</td>
+          <td>{{ object.username }}</td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td><a href="#">Change password</a></td>
+        </tr>
+        <tr>
+          <td>Phone</td>
+          <td>{{ patient.phone }}</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>{{ patient.email }}</td>
+        </tr>
+        <tr>
+          <td>Address</td>
+          <td>{{ patient.address }}</td>
+        </tr>
+      </table>
+      <br>
+      <br>
+      <br>
+    </div>
+
+    <div class="" id="user-timeline" style="display: none;">
+      <p>{{ timeline }}</p>
+      <br>
+      <br>
+      <br>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

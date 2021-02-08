@@ -1,0 +1,105 @@
+{% load static %}
+<header class="fixed-top">
+  <div class="header-container">
+
+    <div class="header-row header-row-1 bg-dark text-white">
+      <a {% if user.is_authenticated %} href="http://{{ request.get_host }}/home/" {% else %} href="http://{{ request.get_host }}/" {% endif %} class="text-center brand">
+        <!--<div class="header-icon" style="background-image: url({% static 'hosman_web/images/heartbeat-s.png' %});"></div>-->
+        <img class="" src="{% static 'hosman_web/images/heartbeat-s.png' %}" width="30" height="30" alt="">
+        <h6 class="header-title vertical-center">HeartBeat</h6>
+      </a>
+      
+      <form action="http://{{ request.get_host }}/get/search/" method="GET">
+        <div class="header-search">
+          <input type="search" name="search" placeholder="Search" id="search-main" onfocus="toggleSearchFilterButton()"/>
+          <button type="submit" class="search-icon text-dark" onclick="return srchEmpty()"><i class="fa fa-search" aria-hidden="true"></i></button>
+          <button type="button" class="text-white" id="drop-filter" onclick="toggleSearchFilter()"><i class="fa fa-filter" aria-hidden="true" id="search-filter-button"></i></button>
+        </div>
+        <div class="" id="search-filter">
+          <p>Search For: </p>
+          <button id="search-filter-times" type="button"><i id="filter--ok" class="fa fa-times-circle"></i></button>
+          <button id="search-filter-check" type="button"><i id="filter-ok" class="fa fa-check-circle"></i></button>
+          <ul>
+            <li>
+              <label for="id_doctor">Doctor</label>
+              <input type="checkbox" name="doctor" value="doctor" id="id_doctor" checked/>
+            </li>
+            <li>
+              <label for="id_facility">Facility/Service</label>
+              <input type="checkbox" name="facility" value="facility" id="id_facility" checked/>
+            </li>
+            <li>
+              <label for="id_schedule">Appointment Schedule</label>
+              <input type="checkbox" name="schedule" value="schedule" id="id_schedule" checked/>
+            </li>
+          </ul>
+        </div>
+        <div id="srch-main-suggestion" class="div-center-x"></div>
+      </form>
+    </div>
+    <div class="header-row header-row-2" id="nav-div">
+
+      {% if user.is_authenticated and not index %}
+      <button class="expand-menu" name="nav-menu" id="nav-menu" type="button" onclick="toggleSideMenu()">
+        <img id="nav-menu-icon" class="account-image" src="{{ request.profile_picture.0 }}" alt="IMG" width="50" height="50"/>
+      </button>
+      {% endif %}
+      
+      <div class="text-center" id="nav-option">
+        <a href="http://{{ request.get_host }}/accounts/profile/" class="nav-btn nav-btn-5">
+          <i class="fas fa-user-circle"></i>
+        </a>
+        {% if user.is_authenticated and not index %}
+        <button class="nav-btn nav-btn-4" type="button"><i class="fa fa-calendar-check" aria-hidden="true"></i></button>
+        <button class="nav-btn nav-btn-3" type="button"><i class="fa fa-archive" aria-hidden="true"></i></button>
+        {% endif %}
+        <button class="nav-btn nav-btn-2" type="button"><i class="fa fa-user-md" aria-hidden="true"></i></button>
+        <button class="nav-btn nav-btn-1" type="button"><i class="fa fa-h-square" aria-hidden="true"></i></button>
+      </div>
+
+    </div>
+
+  </div>
+</header>
+
+<nav>
+  {% if user.is_authenticated and not index %}
+  <div id="expanded-menu">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <ul>
+      <li><button class="option-btn" onclick="toggleAccountsOption()">Accounts<i class="fa fa-chevron-circle-down" id="accounts-down" aria-hidden="true"></i><i class="fa fa-chevron-circle-up" id="accounts-up" aria-hidden="true"></i></button></li>
+      <li>
+        <div id="accounts-dropdown">
+          <ul>
+            {% if user.is_manager %}
+            <li><a href="http://{{ request.get_host }}/admin/">Accounts {{ request.privilege.0 }}</a></li>
+            {% endif %}
+            <li><a href="#">Add Family</a></li>
+            <li><a href="http://{{ request.get_host }}/accounts/profile/">Profile</a></li>
+            <li><a href="http://{{ request.get_host }}/accounts/password_change/">Change Password</a></li>
+            <li><a href="http://{{ request.get_host }}/accounts/logout/">Logout</a></li>
+          </ul>
+        </div>
+      </li>
+      <li><button class="option-btn">Appointments</button></li>
+      <li><button class="option-btn">Med History</button></li>
+      <li><button class="option-btn">Settings</button></li>
+      <li><button class="option-btn">About</button></li>
+      <li><button class="option-btn">Help</button></li>
+      <li><button class="option-btn">Feedback</button></li>
+      <li><button class="option-btn">Privacy Statement</button></li>
+    </ul>
+    <br>
+    <br>
+  </div>
+  {% endif %}
+</nav>
+
+<br>
+<br>
+<br>
+<br>

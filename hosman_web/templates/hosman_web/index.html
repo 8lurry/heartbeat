@@ -1,0 +1,11 @@
+{% extends "./base.html" %}
+{% block main %}
+<div class="text-center div-center" id="greet-index">
+    <h5>Welcome to HeartBeat.</h5>
+    <p>Your personal health care assistant.</p>
+    <br>
+    <p>Please Login into your account:</p>
+    <a class="btn-main" href="http://{{ request.get_host }}/accounts/login/">Login</a>
+    <a class="btn-main" href="http://{{ request.get_host }}/accounts/signup/">Register</a>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "hosman_web/base.html" %}
+{% block content %}
+<div class='container align-right'>
+    <h3 class="text-center">Upload A Profile Picture:</h3>
+    <br>
+    <form method="POST" class="content-right" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <span>
+            <input type="submit" value="UPDATE">
+            <button class="btn-main"><a href="http://{{ request.get_host }}/accounts/profile">Skip</a></button>
+        </span>
+    </form>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}

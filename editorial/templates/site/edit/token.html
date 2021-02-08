@@ -1,0 +1,15 @@
+{% extends "../base.html" %}
+{% block content %}
+<div class='container align-right'>
+    <h3 class="text-center">Request a Token Update:</h3>
+    <br>
+    <form method="POST" class="content-right">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <input type="submit" value="Confirm Token">
+    </form>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}

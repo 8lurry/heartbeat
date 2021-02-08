@@ -1,0 +1,24 @@
+{% extends "./base.html" %}
+{% block content %}
+  <h1>Schedule List</h1>
+  {% if schedule_list %}
+  <ul>
+    {% for schedule in schedule_list %}
+      <li>
+        {{ schedule }}
+        <a href="update/{{ schedule.get_absolute_url }}">
+          <button>UPDATE</button>
+        </a>
+        <a href="update/{{ schedule.get_absolute_url }}token/">
+          <button>TOKENS</button>
+        </a>
+        <a href="update/{{ schedule.get_absolute_url }}token/create/">
+          <button>NEW TOKEN</button>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no Schedules in this Site.</p>
+  {% endif %} 
+{% endblock %}

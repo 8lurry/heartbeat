@@ -1,0 +1,19 @@
+{% extends "hosman_web/base.html" %}
+{% block content %}
+<div class='container'>
+    <h3 class="text-center">Upload Profile:</h3>
+    <br>
+    <form method="POST" class="div-center-x">
+        {% csrf_token %}
+        <div class="form-row">{{ patient_form.as_p }}</div>
+        <div class="form-row">{{ address_form.as_p }}</div>
+        <span>
+            <input type="submit" value="UPDATE">
+            <button class="btn-main"><a href="http://{{ request.get_host }}/accounts/profile/setup_wiz/update_info/profile_picture">Skip</a></button>
+        </span>
+        <br>
+        <br>
+        <br>
+    </form>
+</div>
+{% endblock %}

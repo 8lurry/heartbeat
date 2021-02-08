@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  {% load static %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="{% static 'hosman_web/fa/css/all.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'hosman_web/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'hosman_web/css/style.css' %}">
+    <title>H-care</title>
+  </head>
+  <body class="text-center">
+    {% include "./header.html" %}
+    {% block main %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% include "./footer.html" %}
+  </body>
+</html>

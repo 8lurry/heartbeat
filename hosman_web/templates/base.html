@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Hospital Management System.</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=content-width; initial-scale=1; user-scalable=no;">
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'hosman_web/css/bootstrap.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'hosman_web/css/style.css' %}">
+	</head>
+	<body>
+		<header></header>
+		{% block form %}{% endblock %}
+		<footer>
+			<script src="{% static 'hosman_web/js/bootstrap.js' %}"></script>
+			<script src="{% static 'hosman_web/js/script.js' %}"></script>
+		</footer>
+	</body>
+</html>

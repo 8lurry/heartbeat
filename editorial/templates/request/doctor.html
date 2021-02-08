@@ -1,0 +1,15 @@
+{% extends "hosman_web/base.html" %}
+{% block content %}
+<div class='container align-right'>
+    <h3 class="text-center">Fill Up Your Profile As A Doctor:</h3>
+    <br>
+    <form method="POST" class="content-right">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <input type="submit" value="Request Membership">
+    </form>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}

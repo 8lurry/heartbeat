@@ -1,0 +1,19 @@
+{% extends "../hosman_web/base.html" %}
+{% block content %}
+<div class='container'>
+    <h3 class="text-center">Account Registration:</h3>
+    <div class="div-center-x">
+        <form method="POST" id="signup-form" onclick="validateUsername()">
+            {% csrf_token %}
+            {{ form.as_ul }}
+            <input type="submit" value="Sign Up">
+        </form>
+        <br>
+        <p>Already have an Account?</p>
+        <a class="btn-main" href="http://{{ request.get_host }}/accounts/login/">Login</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}
