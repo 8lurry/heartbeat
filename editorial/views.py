@@ -28,7 +28,7 @@ class DoctorView(FormView):
     def get(self, request):
         if request.user.is_authenticated:
             context = self.get_context_data()
-            patient_object = Patient.objects.get(user=request.user.id)
+            patient_object = Patient.objects.get(user=request.user)
             default_center = Center.objects.filter(department__name="default")
             context['form'].fields['assigned_to'].initial = default_center[0]
             context['form'].fields['patient'].initial = patient_object

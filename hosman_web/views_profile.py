@@ -12,13 +12,13 @@ class UserProfileView(DetailView):
     slug_field = 'username'
     def get_context_data(self, *args, **kwargs):
         context = super(UserProfileView, self).get_context_data(*args, **kwargs)
-        patient = Patient.objects.get(user=self.object.id)
+        patient = Patient.objects.get(user=self.object)
         context['patient'] = patient
         context['picture'] = patient.profile_picture.content
         try:
-            record_objs = HistoricalRecord.objects.get(patient=self.object.id)
+            record_objs = HistoricalRecord.objects.get(patient=patient)
             context['timeline'] = record_objs
-        except:
+        except HistoricalRecord.DoesNotExist:
             context['timeline'] = 'You have no hospital record yet!'
         return context
     def get(self, request, *args, **kwargs):

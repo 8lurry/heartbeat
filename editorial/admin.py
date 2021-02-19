@@ -5,7 +5,7 @@ from .models import (MembershipRequest, Specialization, SiteManager, Branch,
 Doctor, Nurse, Employee, Reception, Schedule, ScheduleRequest, Token, HistoricalRecord)
 
 def get_site(request):
-    site_admin = SiteManager.objects.filter(patient__user__id=request.user.id)
+    site_admin = SiteManager.objects.filter(patient__user=request.user)
     if site_admin.count() > 0:
         return site_admin[0].site.branch
     branch = Branch.objects.get(name="default")
@@ -74,8 +74,8 @@ class BaseM(admin.ModelAdmin):
 
 class ScheduleAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
-        qs = self.model._default_manager.filter(center=request.site.id)
-        sr = ScheduleRequest.objects.filter(schedule__center=request.site.id)
+        qs = self.model._default_manager.filter(center=request.site)
+        sr = ScheduleRequest.objects.filter(schedule__center=request.site)
         for i in range(len(sr)):
             qs = qs.exclude(id=sr[i].schedule.id)
         ordering = self.get_ordering(request)
@@ -85,7 +85,7 @@ class ScheduleAdmin(admin.ModelAdmin):
 
 class ScheduleRequestAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
-        qs = self.model._default_manager.filter(schedule__center=request.site.id)
+        qs = self.model._default_manager.filter(schedule__center=request.site)
         qs = qs.exclude(request="R")
         ordering = self.get_ordering(request)
         if ordering:

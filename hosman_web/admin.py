@@ -135,11 +135,11 @@ class HCare(admin.AdminSite):
 
 class SuAdmin(UserAdmin):
     def email(self, obj):
-        return Patient.objects.get(user=obj.id).email
+        return Patient.objects.get(user=obj).email
     def first_name(self, obj):
-        return Patient.objects.get(user=obj.id).first_name
+        return Patient.objects.get(user=obj).first_name
     def last_name(self, obj):
-        return Patient.objects.get(user=obj.id).last_name
+        return Patient.objects.get(user=obj).last_name
 
 hcare = HCare(name="hcare")
 

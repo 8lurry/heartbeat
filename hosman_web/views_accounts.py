@@ -17,7 +17,7 @@ class ProfilePictureView(GContentView):
         if form.is_valid():
             g_content = form.save(commit=False)
             pro_pic = request.FILES['content']
-            patient_object = Patient.objects.get(user=request.user.id)
+            patient_object = Patient.objects.get(user=request.user)
             try:
                 img = Image.open(pro_pic)
                 try:
@@ -36,7 +36,7 @@ class ProfilePictureView(GContentView):
     def get(self, request):
         if request.user.is_authenticated:
             context = self.get_context_data()
-            patient_object = Patient.objects.get(user=request.user.id)
+            patient_object = Patient.objects.get(user=request.user)
             context['form'].fields['belongs_to'].initial = patient_object
             return self.render_to_response(context)
         return HttpResponse("Error 403")

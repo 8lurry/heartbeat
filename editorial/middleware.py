@@ -8,22 +8,22 @@ class CurrentSiteMiddleware(MiddlewareMixin):
             user = request.user
             if hasattr(user, 'is_manager') and user.is_manager:
                 try: 
-                    who = Doctor.objects.get(patient__user=user.id)
+                    who = Doctor.objects.get(patient__user=user)
                     request.privilege = ["doctor"]
                 except: pass
                 try: 
-                    who = Nurse.objects.get(patient__user=user.id)
+                    who = Nurse.objects.get(patient__user=user)
                     request.privilege = ["nurse"]
                 except: pass
                 try: 
-                    who = Employee.objects.get(patient__user=user.id)
+                    who = Employee.objects.get(patient__user=user)
                     request.privilege = ["employee"]
                 except: pass
                 try:
                     request.site = who.assigned_to
                     request.profile_picture = [who.patient.profile_picture.content.url]
                 except: pass 
-                who = SiteManager.objects.filter(patient__user=user.id)
+                who = SiteManager.objects.filter(patient__user=user)
                 if who.count() > 0:
                     request.privilege = ["admin"]
                     request.site = who[0].site

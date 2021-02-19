@@ -67,7 +67,7 @@ class TokenCreateView(CreateView):
         context = self.get_context_data()
         i = int(request.path.replace('/', ' ').split()[3])
         schedule = Schedule.objects.get(id=i)
-        serial = Token.objects.filter(schedule=schedule.id).count()
+        serial = Token.objects.filter(schedule=schedule).count()
         day = datetime.date.today()
         wd = day.weekday()
         timedelta = schedule.day_of_week - wd if schedule.day_of_week > wd else schedule.day_of_week + 7 - wd if schedule.day_of_week < wd else 0
@@ -76,8 +76,8 @@ class TokenCreateView(CreateView):
         context['form'].fields['date'].initial = day
         context['form'].fields['serial'].initial = serial + 1
         if request.user.is_authenticated:
-            patient = Patient.objects.get(user=request.user.id)
-            revisit = AppointmentHistory.objects.filter(patient=patient.id, doctor=schedule.doctor.id, center=schedule.center.id).count() > 0
+            patient = Patient.objects.get(user=request.user)
+            revisit = AppointmentHistory.objects.filter(patient=patient, doctor=schedule.doctor, center=schedule.center).count() > 0
             context['form'].fields['tokenie_logged'].initial = True
             context['form'].fields['revisit'].initial = revisit
             context['form'].fields['patient_name'].initial = patient.__str__()
@@ -95,7 +95,7 @@ class ScheduleCreateView(CreateView):
         form = self.get_form()
         if form.is_valid():
             obj = form.save()
-            sr = ScheduleRequest.objects.create(schedule=obj, made_by=Patient.objects.get(user=request.user.id), request="C")
+            sr = ScheduleRequest.objects.create(schedule=obj, made_by=Patient.objects.get(user=request.user), request="C")
             sr.save()
             return HttpResponseRedirect(self.success_url)
         return render(request, self.template_name, {'form': form})
@@ -117,10 +117,10 @@ class ScheduleView(ListView):
     template_name = 'site/schedule.html'
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.is_manager:
-            self.object_list = self.model._default_manager.filter(center=request.site.id)
-            srs = ScheduleRequest.objects.filter(schedule__center=request.site.id)
+            self.object_list = self.model._default_manager.filter(center=request.site)
+            srs = ScheduleRequest.objects.filter(schedule__center=request.site)
             for i, _ in enumerate(srs):
-                self.object_list = self.object_list.exclude(id=srs[i].schedule.id)
+                self.object_list = self.object_list.exclude(id=srs[i].schedule)
             allow_empty = self.get_allow_empty()
             if not allow_empty:
                 if self.get_paginate_by(self.object_list) is not None and hasattr(self.object_list, 'exists'):
@@ -144,7 +144,7 @@ class ScheduleUpdateView(UpdateView):
         form = self.get_form()
         if form.is_valid():
             retain_old = self.get_object()
-            sr_test = ScheduleRequest.objects.filter(schedule__center=retain_old.center.id, schedule__office_no=retain_old.office_no, request="R")
+            sr_test = ScheduleRequest.objects.filter(schedule__center=retain_old.center, schedule__office_no=retain_old.office_no, request="R")
             obj = form.save()
             if sr_test.count() == 0:
                 dup_old = Schedule.objects.create(
@@ -160,17 +160,17 @@ class ScheduleUpdateView(UpdateView):
                     center=retain_old.center
                     )
                 dup_old.save()
-                sr_ret = ScheduleRequest.objects.create(schedule=dup_old, made_by=Patient.objects.get(user=request.user.id), request="R", ref_id=obj.id)
+                sr_ret = ScheduleRequest.objects.create(schedule=dup_old, made_by=Patient.objects.get(user=request.user), request="R", ref_id=obj.id)
                 sr_ret.save()
             else:
-                sr_test[0].made_by = Patient.objects.get(user=request.user.id)
+                sr_test[0].made_by = Patient.objects.get(user=request.user)
                 sr_test[0].ref_id = obj.id
                 sr_test[0].save()
                 if sr_test.count() > 1:
                     for i in range(1, len(sr_test)):
                         sr_test[i].delete()
             retain_old.delete()
-            sr = ScheduleRequest.objects.create(schedule=obj, made_by=Patient.objects.get(user=request.user.id), request="U")
+            sr = ScheduleRequest.objects.create(schedule=obj, made_by=Patient.objects.get(user=request.user), request="U")
             sr.save()
             return HttpResponseRedirect(self.success_url)
         return render(request, self.template_name, {'form': form})
