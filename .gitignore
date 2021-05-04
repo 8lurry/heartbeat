@@ -3,26 +3,13 @@ settings.py
 *.log
 *.pot
 *.pyc
-__pycache__
-gContent
-gContent/
+__pycache__/*
 gContent/*
-media
-media/
 media/*
-storage
-storage/
 storage/*
-hosman_web/.git
-hosman_web/.git/
 hosman_web/.git/*
-editorial/.git
-editorial/.git/
 editorial/.git/*
-migrations
-migrations/
 migrations/*
 
 # Backup files
 *.bak
-
